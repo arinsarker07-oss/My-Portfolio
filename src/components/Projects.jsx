@@ -94,7 +94,7 @@ const cardVariants = {
 
 export default function Projects() {
   return (
-    <section id="projects" className="section-pad" style={{ position: 'relative' }}>
+    <section id="projects" className="section-pad" style={{ position: 'relative', overflow: 'hidden' }}>
 
       {/* Ambient glow */}
       <div style={{
