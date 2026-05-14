@@ -14,7 +14,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 40)
+    const handler = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', handler)
     return () => window.removeEventListener('scroll', handler)
   }, [])
@@ -39,10 +39,10 @@ export default function Navbar() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        background: scrolled || menuOpen ? 'rgba(5,5,16,0.95)' : 'transparent',
-        backdropFilter: scrolled || menuOpen ? 'blur(24px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.06)' : 'none',
-        transition: 'all 0.4s ease',
+        background: scrolled ? 'rgba(0, 0, 0, 0.7)' : menuOpen ? 'rgba(5, 5, 16, 0.95)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(12px)' : menuOpen ? 'blur(24px)' : 'none',
+        borderBottom: 'none',
+        transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
       }}
     >
       {/* Logo */}

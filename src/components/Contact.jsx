@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { FaDownload } from 'react-icons/fa'
 import { FiGithub, FiLinkedin, FiMail, FiSend } from 'react-icons/fi'
 
 const socials = [
@@ -146,8 +147,8 @@ export default function Contact() {
             whileTap={{ scale: 0.97 }}
             style={{ display: 'inline-flex' }}
           >
-            <FiSend size={16} />
-            Say Hello
+            <FaDownload size={16} />
+            Download Resume
           </motion.a>
         </motion.div>
 
