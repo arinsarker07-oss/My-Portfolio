@@ -7,29 +7,6 @@ import {
 
 const projects = [
   {
-    id: 'anon',
-    title: 'Anon',
-    emoji: '🛒',
-    type: 'eCommerce Website',
-    gradient: 'linear-gradient(135deg, #00d4ff22, #7c3aed22)',
-    glowColor: 'rgba(0,212,255,0.3)',
-    accentColor: '#00d4ff',
-    description:
-      'A privacy-first eCommerce platform enabling anonymous, secure shopping experiences with modern UX and robust backend infrastructure.',
-    techStack: [
-      { icon: SiReact,           name: 'React',   color: '#61DAFB' },
-      { icon: SiNodedotjs,       name: 'Node.js', color: '#8CC84B' },
-      { icon: SiMongodb,         name: 'MongoDB', color: '#00ED64' },
-      { icon: SiJsonwebtokens,   name: 'JWT',     color: '#fbba00' },
-    ],
-    features: [
-      'Anonymous user sessions with JWT-based auth',
-      'Product filtering, cart management & order history',
-      'RESTful API with Express.js backend',
-    ],
-    icon: FiShoppingCart,
-  },
-  {
     id: 'aura-shop',
     title: 'Aura Shop',
     emoji: '✨',
@@ -51,6 +28,33 @@ const projects = [
       'Admin dashboard with sales analytics',
     ],
     icon: FiShoppingCart,
+    githubLink: 'https://github.com/arinsarker07-oss/vivid-ecommerce',
+    liveLink: 'https://vivid-ecommerce-ui9y.vercel.app/',
+  },
+  {
+    id: 'anon',
+    title: 'Anon eCommerce Website',
+    emoji: '🛒',
+    type: 'eCommerce Website',
+    gradient: 'linear-gradient(135deg, #00d4ff22, #7c3aed22)',
+    glowColor: 'rgba(0,212,255,0.3)',
+    accentColor: '#00d4ff',
+    description:
+      'A privacy-first eCommerce platform enabling anonymous, secure shopping experiences with modern UX and robust backend infrastructure.',
+    techStack: [
+      { icon: SiReact,           name: 'React',   color: '#61DAFB' },
+      { icon: SiNodedotjs,       name: 'Node.js', color: '#8CC84B' },
+      { icon: SiMongodb,         name: 'MongoDB', color: '#00ED64' },
+      { icon: SiJsonwebtokens,   name: 'JWT',     color: '#fbba00' },
+    ],
+    features: [
+      'Anonymous user sessions with JWT-based auth',
+      'Product filtering, cart management & order history',
+      'RESTful API with Express.js backend',
+    ],
+    icon: FiShoppingCart,
+    githubLink: 'https://github.com/arinsarker07-oss/ecommerce-website',
+    liveLink: 'https://arinsarker07-oss.github.io/ecommerce-website/#',
   },
   {
     id: 'friend-zone',
@@ -74,6 +78,8 @@ const projects = [
       'Friend request & notification system',
     ],
     icon: FiUsers,
+    githubLink: 'https://github.com/arinsarker07-oss/Friend-Zone',
+    liveLink: 'https://friends-zone-theta.vercel.app/',
   },
 ]
 
@@ -222,14 +228,18 @@ function ProjectCard({ project, index }) {
           </div>
           <div style={{ display: 'flex', gap: '8px' }}>
             <motion.a
-              href="#"
+              href={project.githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ scale: 1.1, color: project.accentColor }}
               style={{ color: 'var(--text-muted)', padding: '6px' }}
             >
               <FiGithub size={18} />
             </motion.a>
             <motion.a
-              href="#"
+              href={project.liveLink}
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ scale: 1.1, color: project.accentColor }}
               style={{ color: 'var(--text-muted)', padding: '6px' }}
             >

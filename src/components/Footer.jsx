@@ -54,8 +54,8 @@ export default function Footer() {
         {/* Social icons */}
         <div style={{ display: 'flex', gap: '16px' }}>
           {[
-            { icon: FiGithub,   href: 'https://github.com/arinsarker' },
-            { icon: FiLinkedin, href: 'https://linkedin.com/in/arinsarker' },
+            { icon: FiGithub, href: 'https://github.com/arinsarker07-oss' },
+            { icon: FiLinkedin, href: 'https://www.linkedin.com/in/arin-sarker/' },
           ].map(({ icon: Icon, href }) => (
             <a key={href} href={href} target="_blank" rel="noopener noreferrer"
               style={{ color: 'var(--text-muted)', transition: 'color 0.3s' }}

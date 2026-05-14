@@ -6,8 +6,8 @@ const socials = [
     id: 'github',
     icon: FiGithub,
     label: 'GitHub',
-    handle: '@arinsarker',
-    href: 'https://github.com/arinsarker',
+    handle: 'arinsarker07-oss',
+    href: 'https://github.com/arinsarker07-oss',
     color: '#ffffff',
     bg: 'rgba(255,255,255,0.05)',
     border: 'rgba(255,255,255,0.1)',
@@ -18,8 +18,8 @@ const socials = [
     id: 'linkedin',
     icon: FiLinkedin,
     label: 'LinkedIn',
-    handle: 'Arin Samuel Sarker',
-    href: 'https://linkedin.com/in/arinsarker',
+    handle: 'Arin Sarker',
+    href: 'https://www.linkedin.com/in/arin-sarker/',
     color: '#0A66C2',
     bg: 'rgba(10,102,194,0.08)',
     border: 'rgba(10,102,194,0.25)',
@@ -30,8 +30,8 @@ const socials = [
     id: 'email',
     icon: FiMail,
     label: 'Email',
-    handle: 'arinsarker@email.com',
-    href: 'mailto:arinsarker@email.com',
+    handle: 'arinsarker07@gmail.com',
+    href: 'https://mail.google.com/mail/?view=cm&fs=1&to=arinsarker07@gmail.com&su=Contacting+from+Portfolio',
     color: '#00d4ff',
     bg: 'rgba(0,212,255,0.06)',
     border: 'rgba(0,212,255,0.2)',
@@ -140,7 +140,7 @@ export default function Contact() {
           </p>
 
           <motion.a
-            href="mailto:arinsarker@email.com"
+            href='https://mail.google.com/mail/?view=cm&fs=1&to=arinsarker07@gmail.com&su=Contacting+from+Portfolio'
             className="btn-primary"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
@@ -163,8 +163,8 @@ export default function Contact() {
             <motion.a
               key={id}
               href={href}
-              target="_blank"
-              rel="noopener noreferrer"
+              target={id === 'email' ? undefined : "_blank"}
+              rel={id === 'email' ? undefined : "noopener noreferrer"}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
