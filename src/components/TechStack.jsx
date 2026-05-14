@@ -1,299 +1,230 @@
-import * as THREE from 'three'
-import { useRef, useMemo, useState, useEffect, Suspense } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { Environment } from '@react-three/drei'
-import { EffectComposer, N8AO } from '@react-three/postprocessing'
-import { BallCollider, Physics, RigidBody, CylinderCollider } from '@react-three/rapier'
 import { motion } from 'framer-motion'
+import { SiMongodb, SiExpress, SiReact, SiNodedotjs, SiRedux, SiTypescript, SiJavascript, SiTailwindcss, SiNextdotjs, SiGit, SiFirebase, SiFramer } from 'react-icons/si'
+import { FiGithub } from 'react-icons/fi'
+import { MdVerifiedUser } from 'react-icons/md'
 
-// ─── Asset setup ──────────────────────────────────────────
-const textureLoader = new THREE.TextureLoader()
-const imageUrls = [
-  '/images/react2.webp',
-  '/images/next2.webp',
-  '/images/node2.webp',
-  '/images/express.webp',
-  '/images/mongo.webp',
-  '/images/mysql.webp',
-  '/images/typescript.webp',
-  '/images/javascript.webp',
+const coreTech = [
+  { name: 'React.js', icon: SiReact, color: '#61DAFB' },
+  { name: 'Node.js', icon: SiNodedotjs, color: '#339933' },
+  { name: 'Express.js', icon: SiExpress, color: '#f7df1e' }, // Yellow as requested
+  { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
+  { name: 'Redux', icon: SiRedux, color: '#764ABC' },
 ]
-const textures = imageUrls.map((url) => textureLoader.load(url))
-// Reduced segments from 28 to 16 for performance
-const sphereGeometry = new THREE.SphereGeometry(1, 16, 16)
 
-// Pre-calculated to avoid random jumps on re-render
-const sphereData = [...Array(24)].map(() => ({ // Reduced count from 30 to 24
-  scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
-  materialIndex: Math.floor(Math.random() * textures.length),
-}))
+const extendedTech = [
+  { name: 'GitHub', icon: FiGithub, color: '#ffffff' },
+  { name: 'Better Auth', icon: MdVerifiedUser, color: '#00d4ff' },
+  { name: 'Next.js', icon: SiNextdotjs, color: '#ffffff' },
+  { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+  { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E' },
+  { name: 'Tailwind', icon: SiTailwindcss, color: '#06B6D4' },
+  { name: 'Git', icon: SiGit, color: '#F05032' },
+  { name: 'Firebase', icon: SiFirebase, color: '#FFCA28' },
+  { name: 'Framer', icon: SiFramer, color: '#0055FF' },
+]
 
-// ─── Sphere ───────────────────────────────────────────────
-function SphereGeo({ vec = new THREE.Vector3(), scale, r = THREE.MathUtils.randFloatSpread, material, isActive }) {
-  const api = useRef(null)
-
-  useFrame((_state, delta) => {
-    if (!isActive || !api.current) return
-    delta = Math.min(0.1, delta)
-    const impulse = vec
-      .copy(api.current.translation())
-      .normalize()
-      .multiply(new THREE.Vector3(-50 * delta * scale, -150 * delta * scale, -50 * delta * scale))
-    api.current.applyImpulse(impulse, true)
-  })
-
-  return (
-    <RigidBody
-      linearDamping={0.75}
-      angularDamping={0.15}
-      friction={0.2}
-      position={[r(20), r(20) - 25, r(20) - 10]}
-      ref={api}
-      colliders={false}
-    >
-      <BallCollider args={[scale]} />
-      <CylinderCollider
-        rotation={[Math.PI / 2, 0, 0]}
-        position={[0, 0, 1.2 * scale]}
-        args={[0.15 * scale, 0.275 * scale]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        scale={scale}
-        geometry={sphereGeometry}
-        material={material}
-        rotation={[0.3, 1, 1]}
-      />
-    </RigidBody>
-  )
-}
-
-// ─── Invisible mouse pointer collider ─────────────────────
-function Pointer({ vec = new THREE.Vector3(), isActive }) {
-  const ref = useRef(null)
-
-  useFrame(({ pointer, viewport }) => {
-    if (!isActive || !ref.current) return
-    const targetVec = vec.lerp(
-      new THREE.Vector3(
-        (pointer.x * viewport.width) / 2,
-        (pointer.y * viewport.height) / 2,
-        0
-      ),
-      0.2
-    )
-    ref.current.setNextKinematicTranslation(targetVec)
-  })
-
-  return (
-    <RigidBody position={[100, 100, 100]} type="kinematicPosition" colliders={false} ref={ref}>
-      <BallCollider args={[2]} />
-    </RigidBody>
-  )
-}
-
-// ─── Main Section ─────────────────────────────────────────
 export default function TechStack() {
-  const [isActive, setIsActive] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
-
-  // Activate physics when section scrolls into view
-  useEffect(() => {
-    const handleScroll = () => {
-      const target = document.getElementById('tech')
-      if (!target) return
-      const rect = target.getBoundingClientRect()
-      setIsActive(rect.top < window.innerHeight * 0.75)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll() // run on mount in case already in view
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  // Build materials once
-  const materials = useMemo(() =>
-    textures.map(
-      (texture) =>
-        new THREE.MeshPhysicalMaterial({
-          map: texture,
-          emissive: '#ffffff',
-          emissiveMap: texture,
-          emissiveIntensity: 0.3,
-          metalness: 0.5,
-          roughness: 1,
-          clearcoat: 0.1,
-        })
-    ), [])
-
   return (
-    <section
-      id="tech"
-      className="section-pad"
-      style={{ position: 'relative', overflow: 'hidden' }}
-    >
-      {/* Ambient background glow */}
+    <section id="tech" className="section-pad" style={{ position: 'relative', overflow: 'hidden' }}>
+
+      {/* Background glow */}
       <div style={{
         position: 'absolute', left: '50%', top: '50%',
-        transform: 'translate(-50%,-50%)',
-        width: 600, height: 600,
-        background: 'radial-gradient(circle, rgba(124,58,237,0.08), transparent 70%)',
+        transform: 'translate(-50%, -50%)',
+        width: 800, height: 800,
+        background: 'radial-gradient(circle, rgba(0,212,255,0.05), transparent 70%)',
         pointerEvents: 'none',
         borderRadius: '50%',
       }} />
 
       <div className="container-lg" style={{ position: 'relative', zIndex: 2 }}>
 
-        {/* Section heading */}
+        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          style={{ textAlign: 'center', marginBottom: '8px' }}
+          style={{ textAlign: 'center', marginBottom: '80px' }}
         >
           <span className="section-tag">⚡ Arsenal</span>
           <h2 style={{
             fontFamily: 'var(--font-head)',
             fontWeight: 800,
-            fontSize: 'clamp(2rem, 4vw, 3rem)',
+            fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
             letterSpacing: '-1px',
-            marginBottom: '12px',
           }}>
             My <span className="gradient-text">Tech Stack</span>
           </h2>
-          <p style={{ color: 'var(--text-muted)', maxWidth: '460px', margin: '0 auto 16px' }}>
-            Interact with the spheres — move your mouse around to push them. Each one represents a technology I work with.
+          <p style={{ color: 'var(--text-muted)', maxWidth: '500px', margin: '16px auto 0' }}>
+            A fusion of modern tools and frameworks used to craft high-performance, futuristic web experiences.
           </p>
         </motion.div>
 
-        {/* 3D Canvas */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          style={{
-            width: '100%',
-            height: '520px',
-            overflow: 'hidden',
-            background: 'transparent',
-            position: 'relative',
-          }}
-        >
-          {/* Activation hint overlay */}
-          {!isActive && (
-            <div style={{
-              position: 'absolute', inset: 0, zIndex: 10,
+        {/* Orbit Section */}
+        <div style={{
+          position: 'relative',
+          height: '400px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: '100px',
+        }}>
+          {/* Central Logo / Pulse */}
+          <motion.div
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            style={{
+              width: 100, height: 100,
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(0,212,255,0.2), transparent)',
+              border: '1px solid rgba(0,212,255,0.3)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: 'rgba(5,5,16,0.4)',
-              backdropFilter: 'blur(2px)',
-              borderRadius: '24px',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.75rem',
-              color: 'var(--accent-cyan)',
-              letterSpacing: '2px',
-              textTransform: 'uppercase',
-              pointerEvents: 'none',
-            }}>
-              ↓ Scroll to activate physics
-            </div>
-          )}
-
-          <Canvas
-            shadows
-            dpr={[1, 2]} // Cap pixel ratio at 2x
-            performance={{ min: 0.5 }} // Allow scaling down
-            gl={{ 
-              alpha: true, 
-              stencil: false, 
-              depth: false, 
-              antialias: false,
-              powerPreference: 'high-performance' 
+              fontSize: '2rem',
+              zIndex: 5,
             }}
-            camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
-            onCreated={(state) => { state.gl.toneMappingExposure = 1.5 }}
-            style={{ width: '100%', height: '100%' }}
           >
-            <Suspense fallback={null}>
-              <ambientLight intensity={1} />
-              <spotLight
-                position={[20, 20, 25]}
-                penumbra={1}
-                angle={0.2}
-                color="white"
-                castShadow
-                shadow-mapSize={[512, 512]}
-              />
-              <directionalLight position={[0, 5, -4]} intensity={2} />
+            🚀
+          </motion.div>
 
-              <Physics gravity={[0, 0, 0]}>
-                <Pointer isActive={isActive} />
-                {(isMobile ? sphereData.slice(0, 12) : sphereData).map((props, i) => (
-                  <SphereGeo
-                    key={i}
-                    scale={props.scale}
-                    material={materials[props.materialIndex]}
-                    isActive={isActive}
-                  />
-                ))}
-              </Physics>
+          {/* Core Orbit Icons */}
+          {coreTech.map((tech, i) => (
+            <motion.div
+              key={tech.name}
+              style={{
+                position: 'absolute',
+                width: 64, height: 64,
+                borderRadius: '16px',
+                background: 'rgba(255,255,255,0.03)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                boxShadow: `0 0 20px ${tech.color}15`,
+              }}
+              animate={{
+                rotate: 360,
+              }}
+              transition={{
+                duration: 20,
+                repeat: Infinity,
+                ease: 'linear',
+                delay: -i * (20 / coreTech.length),
+              }}
+            >
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: 'linear', delay: -i * (20 / coreTech.length) }}
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}
+              >
+                <tech.icon size={28} color={tech.color} />
+              </motion.div>
 
-              {/* City preset replaces the custom .hdr file */}
-              <Environment preset="city" environmentIntensity={0.5} />
+              {/* This inner div handles the orbital positioning */}
+              <style dangerouslySetInnerHTML={{
+                __html: `
+                #tech .orbit-item-${i} {
+                  transform-origin: 200px center;
+                  left: calc(50% - 200px);
+                }
+              `}} />
+            </motion.div>
+          ))}
 
-              {!isMobile && (
-                <EffectComposer enableNormalPass={false}>
-                  <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
-                </EffectComposer>
-              )}
-            </Suspense>
-          </Canvas>
-        </motion.div>
+          {/* Custom orbit positioning logic using a wrapper */}
+          <div style={{ position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none' }}>
+            {coreTech.map((tech, i) => (
+              <motion.div
+                key={`orbit-${tech.name}`}
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  width: 60, height: 60,
+                  marginTop: -30, marginLeft: -30,
+                }}
+                animate={{
+                  rotate: 360,
+                }}
+                transition={{
+                  duration: 25,
+                  repeat: Infinity,
+                  ease: 'linear',
+                  delay: -i * (25 / coreTech.length),
+                }}
+              >
+                <motion.div
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 160, // Radius of orbit
+                    width: 60, height: 60,
+                    borderRadius: '15px',
+                    background: 'rgba(255,255,255,0.03)',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    boxShadow: `0 0 30px ${tech.color}20`,
+                  }}
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 25, repeat: Infinity, ease: 'linear', delay: -i * (25 / coreTech.length) }}
+                >
+                  <tech.icon size={26} color={tech.color} />
+                </motion.div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
 
-        {/* Tech name pills below canvas */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap', marginTop: '28px' }}
-        >
-          {[
-            'React', 'Next.js', 'Node.js', 'Express', 'MongoDB', 'MySQL', 'TypeScript', 'JavaScript',
-            'Tailwind CSS', 'Firebase', 'Git / GitHub', 'Framer Motion'
-          ].map((name, i) => (
-            <motion.span
-              key={name}
-              initial={{ opacity: 0, y: 10 }}
+        {/* Floating Grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+          gap: '20px',
+        }}>
+          {extendedTech.map((tech, i) => (
+            <motion.div
+              key={tech.name}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              whileHover={{ y: -3, boxShadow: '0 6px 20px rgba(0,212,255,0.2)' }}
+              // transition={{ duration: 0.3, delay: i * 0.04 }}
+              whileHover={{
+                y: -5,
+                background: 'rgba(255,255,255,0.06)',
+                borderColor: tech.color + '40',
+                boxShadow: `0 10px 30px ${tech.color}15`,
+              }}
               style={{
-                padding: '7px 16px',
-                background: 'rgba(0,212,255,0.06)',
-                border: '1px solid rgba(0,212,255,0.15)',
-                borderRadius: '50px',
-                fontFamily: 'var(--font-head)',
-                fontWeight: 600,
-                fontSize: '0.82rem',
-                color: 'var(--text-primary)',
+                padding: '24px',
+                background: 'rgba(255,255,255,0.02)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255,255,255,0.06)',
+                borderRadius: '20px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '12px',
                 cursor: 'default',
                 transition: 'all 0.3s ease',
               }}
             >
-              {name}
-            </motion.span>
+              <div style={{
+                width: 44, height: 44,
+                borderRadius: '12px',
+                background: tech.color + '10',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <tech.icon size={22} color={tech.color} />
+              </div>
+              <span style={{
+                fontFamily: 'var(--font-head)',
+                fontSize: '0.85rem',
+                fontWeight: 600,
+                color: 'var(--text-primary)',
+              }}>{tech.name}</span>
+            </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   )
