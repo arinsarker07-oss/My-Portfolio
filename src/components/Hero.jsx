@@ -20,9 +20,8 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } },
 }
 
-const badges = ['MERN Stack', 'Full-Stack Dev']
+const badges = ['MERN Stack', 'Full-Stack Developer']
 
-/* Sinusoidal zero-gravity float: y + gentle rotation */
 const floatVariants = {
   animate: {
     y: [0, -20, -8, -22, 0],
