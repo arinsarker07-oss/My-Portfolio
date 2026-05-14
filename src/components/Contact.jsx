@@ -42,7 +42,7 @@ const socials = [
 
 export default function Contact() {
   return (
-    <section id="contact" className="section-pad" style={{ position: 'relative', overflow: 'hidden' }}>
+    <section id="contact" className="section-pad flex flex-col items-center" style={{ position: 'relative', overflow: 'hidden' }}>
 
       {/* Ambient glow */}
       <div style={{
@@ -151,14 +151,7 @@ export default function Contact() {
           </motion.a>
         </motion.div>
 
-        {/* Social Link Cards */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '20px',
-          maxWidth: '700px',
-          margin: '0 auto',
-        }}>
+        <div className="flex flex-wrap justify-center items-center gap-6 w-full px-4 max-w-[1200px] mx-auto">
           {socials.map(({ id, icon: Icon, label, handle, href, color, bg, border, glow, desc }, i) => (
             <motion.a
               key={id}

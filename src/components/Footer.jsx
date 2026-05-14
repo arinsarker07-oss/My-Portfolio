@@ -2,7 +2,7 @@ import { FiGithub, FiLinkedin, FiHeart } from 'react-icons/fi'
 
 export default function Footer() {
   return (
-    <footer style={{
+    <footer className="flex flex-col items-center" style={{
       borderTop: '1px solid rgba(255,255,255,0.06)',
       padding: '40px 24px',
       textAlign: 'center',
@@ -17,15 +17,7 @@ export default function Footer() {
         background: 'linear-gradient(90deg, transparent, var(--accent-cyan), transparent)',
       }} />
 
-      <div style={{
-        maxWidth: 1200,
-        margin: '0 auto',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '16px',
-      }}>
+      <div className="flex flex-col items-center justify-center gap-4 py-8 w-full max-w-[1200px] mx-auto text-center">
         {/* Logo */}
         <span style={{
           fontFamily: 'var(--font-head)',
@@ -39,8 +31,7 @@ export default function Footer() {
           &lt;Arin /&gt;
         </span>
 
-        {/* Credits */}
-        <p style={{
+        <p className="text-center" style={{
           fontFamily: 'var(--font-body)',
           fontSize: '0.82rem',
           color: 'var(--text-muted)',

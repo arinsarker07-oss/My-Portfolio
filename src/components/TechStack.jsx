@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { useRef, useMemo, useState, useEffect } from 'react'
+import { useRef, useMemo, useState, useEffect, Suspense } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Environment } from '@react-three/drei'
 import { EffectComposer, N8AO } from '@react-three/postprocessing'
@@ -19,10 +19,11 @@ const imageUrls = [
   '/images/javascript.webp',
 ]
 const textures = imageUrls.map((url) => textureLoader.load(url))
-const sphereGeometry = new THREE.SphereGeometry(1, 28, 28)
+// Reduced segments from 28 to 16 for performance
+const sphereGeometry = new THREE.SphereGeometry(1, 16, 16)
 
 // Pre-calculated to avoid random jumps on re-render
-const sphereData = [...Array(30)].map(() => ({
+const sphereData = [...Array(24)].map(() => ({ // Reduced count from 30 to 24
   scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
   materialIndex: Math.floor(Math.random() * textures.length),
 }))
@@ -95,6 +96,14 @@ function Pointer({ vec = new THREE.Vector3(), isActive }) {
 // ─── Main Section ─────────────────────────────────────────
 export default function TechStack() {
   const [isActive, setIsActive] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // Activate physics when section scrolls into view
   useEffect(() => {
@@ -200,40 +209,52 @@ export default function TechStack() {
 
           <Canvas
             shadows
-            gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
+            dpr={[1, 2]} // Cap pixel ratio at 2x
+            performance={{ min: 0.5 }} // Allow scaling down
+            gl={{ 
+              alpha: true, 
+              stencil: false, 
+              depth: false, 
+              antialias: false,
+              powerPreference: 'high-performance' 
+            }}
             camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
             onCreated={(state) => { state.gl.toneMappingExposure = 1.5 }}
             style={{ width: '100%', height: '100%' }}
           >
-            <ambientLight intensity={1} />
-            <spotLight
-              position={[20, 20, 25]}
-              penumbra={1}
-              angle={0.2}
-              color="white"
-              castShadow
-              shadow-mapSize={[512, 512]}
-            />
-            <directionalLight position={[0, 5, -4]} intensity={2} />
+            <Suspense fallback={null}>
+              <ambientLight intensity={1} />
+              <spotLight
+                position={[20, 20, 25]}
+                penumbra={1}
+                angle={0.2}
+                color="white"
+                castShadow
+                shadow-mapSize={[512, 512]}
+              />
+              <directionalLight position={[0, 5, -4]} intensity={2} />
 
-            <Physics gravity={[0, 0, 0]}>
-              <Pointer isActive={isActive} />
-              {sphereData.map((props, i) => (
-                <SphereGeo
-                  key={i}
-                  scale={props.scale}
-                  material={materials[props.materialIndex]}
-                  isActive={isActive}
-                />
-              ))}
-            </Physics>
+              <Physics gravity={[0, 0, 0]}>
+                <Pointer isActive={isActive} />
+                {(isMobile ? sphereData.slice(0, 12) : sphereData).map((props, i) => (
+                  <SphereGeo
+                    key={i}
+                    scale={props.scale}
+                    material={materials[props.materialIndex]}
+                    isActive={isActive}
+                  />
+                ))}
+              </Physics>
 
-            {/* City preset replaces the custom .hdr file */}
-            <Environment preset="city" environmentIntensity={0.5} />
+              {/* City preset replaces the custom .hdr file */}
+              <Environment preset="city" environmentIntensity={0.5} />
 
-            <EffectComposer enableNormalPass={false}>
-              <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
-            </EffectComposer>
+              {!isMobile && (
+                <EffectComposer enableNormalPass={false}>
+                  <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
+                </EffectComposer>
+              )}
+            </Suspense>
           </Canvas>
         </motion.div>
 
