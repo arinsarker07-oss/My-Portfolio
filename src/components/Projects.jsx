@@ -1,8 +1,16 @@
 import { motion } from 'framer-motion'
+import { FaChartPie } from 'react-icons/fa'
 import { FiExternalLink, FiGithub, FiShoppingCart, FiUsers, FiCode } from 'react-icons/fi'
+import { IoLogoVercel } from 'react-icons/io5'
+import { RiNextjsLine } from 'react-icons/ri'
 import {
-  SiMongodb, SiExpress, SiReact, SiNodedotjs, SiSocketdotio,
-  SiStripe, SiRedux, SiJsonwebtokens
+  SiMongodb, SiReact, SiNodedotjs, SiSocketdotio,
+  SiStripe, SiRedux, SiJsonwebtokens,
+  SiHtml5,
+  SiTailwindcss,
+  SiJavascript,
+  SiMongoosedotws,
+  SiCss
 } from 'react-icons/si'
 
 /* ─── Projects Data ─────────────────────────────────────── */
@@ -22,10 +30,10 @@ const projects = [
     liveLink: 'https://vivid-ecommerce-ui9y.vercel.app/',
     features: ['Real-time inventory with WebSocket updates', 'Stripe payment gateway integration', 'Admin dashboard with sales analytics'],
     techStack: [
-      { name: 'React', icon: SiReact, color: '#61DAFB' },
-      { name: 'Redux', icon: SiRedux, color: '#764ABC' },
-      { name: 'Express', icon: SiExpress, color: '#ffffff' },
-      { name: 'Stripe', icon: SiStripe, color: '#6772e5' }
+      { name: 'Next-JS', icon: RiNextjsLine, color: "#ffffff" },
+      { name: 'Tailwind', icon: SiTailwindcss, color: '#764ABC' },
+      { name: 'Javascript', icon: SiJavascript, color: '#fbba00' },
+      { name: 'MongoDB', icon: SiMongodb, color: '#47A248' }
     ]
   },
   {
@@ -44,9 +52,9 @@ const projects = [
     features: ['Anonymous user sessions with JWT-based auth', 'Product filtering, cart management & order history', 'RESTful API with Express.js backend'],
     techStack: [
       { name: 'React', icon: SiReact, color: '#61DAFB' },
-      { name: 'Node.js', icon: SiNodedotjs, color: '#8CC84B' },
-      { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
-      { name: 'JWT', icon: SiJsonwebtokens, color: '#fbba00' }
+      { name: 'Javascript', icon: SiJavascript, color: '#fbba00' },
+      { name: 'CSS', icon: SiCss, color: '#1572b6' },
+      { name: 'HTML', icon: SiHtml5, color: '#e34f26' }
     ]
   },
   {
@@ -64,10 +72,10 @@ const projects = [
     liveLink: 'https://friends-zone-theta.vercel.app/',
     features: ['Real-time chat with Socket.io', 'Dynamic post feed with likes & comments', 'Friend request & notification system'],
     techStack: [
-      { name: 'React', icon: SiReact, color: '#61DAFB' },
-      { name: 'Node.js', icon: SiNodedotjs, color: '#8CC84B' },
-      { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
-      { name: 'Socket.io', icon: SiSocketdotio, color: '#ffffff' }
+      { name: 'Next-JS', icon: RiNextjsLine, color: '#ffffff' },
+      { name: 'Tailwind', icon: SiTailwindcss, color: '#764ABC' },
+      { name: 'Recharts', icon: FaChartPie, color: '#47A248' },
+      { name: 'Vercel', icon: IoLogoVercel, color: '#00dfd8' }
     ]
   }
 ]
@@ -281,7 +289,8 @@ function ProjectCard({ project, index }) {
             }}
           >
             <FiExternalLink size={14} />
-            Live Demo
+            <p>  Live Demo</p>
+           
           </motion.a>
 
           <motion.a
