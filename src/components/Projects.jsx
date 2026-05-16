@@ -289,8 +289,8 @@ function ProjectCard({ project, index }) {
             }}
           >
             <FiExternalLink size={14} />
-            <p>  Live Demo</p>
-           
+             Live Demo
+
           </motion.a>
 
           <motion.a
