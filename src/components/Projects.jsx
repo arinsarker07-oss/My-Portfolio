@@ -1,317 +1,387 @@
 import { motion } from 'framer-motion'
-import { FiExternalLink, FiGithub, FiShoppingCart, FiUsers } from 'react-icons/fi'
+import { FiExternalLink, FiGithub, FiShoppingCart, FiUsers, FiCode } from 'react-icons/fi'
 import {
   SiMongodb, SiExpress, SiReact, SiNodedotjs, SiSocketdotio,
   SiStripe, SiRedux, SiJsonwebtokens
 } from 'react-icons/si'
 
+/* ─── Projects Data ─────────────────────────────────────── */
 const projects = [
   {
     id: 'aura-shop',
     title: 'Aura Shop',
     emoji: '✨',
     type: 'eCommerce Website',
-    gradient: 'linear-gradient(135deg, #7c3aed22, #ec489922)',
-    glowColor: 'rgba(124,58,237,0.3)',
-    accentColor: '#7c3aed',
-    description:
-      'A premium eCommerce experience with real-time inventory management, Stripe payment integration, and a sleek storefront UI.',
-    techStack: [
-      { icon: SiReact,   name: 'React',   color: '#61DAFB' },
-      { icon: SiRedux,   name: 'Redux',   color: '#764ABC' },
-      { icon: SiExpress, name: 'Express', color: '#ffffff' },
-      { icon: SiStripe,  name: 'Stripe',  color: '#6772e5' },
-    ],
-    features: [
-      'Real-time inventory with WebSocket updates',
-      'Stripe payment gateway integration',
-      'Admin dashboard with sales analytics',
-    ],
+    description: 'A premium eCommerce experience with real-time inventory management, Stripe payment integration, and a sleek storefront UI.',
+    image: '/images/aurashop.png',
     icon: FiShoppingCart,
+    accentColor: '#7c3aed',
+    glowColor: 'rgba(124, 58, 237, 0.2)', // গ্লো কিছুটা হালকা করা হলো ক্লিন লুকের জন্য
+    gradient: 'linear-gradient(135deg, rgba(124, 58, 237, 0.08), transparent)',
     githubLink: 'https://github.com/arinsarker07-oss/vivid-ecommerce',
     liveLink: 'https://vivid-ecommerce-ui9y.vercel.app/',
+    features: ['Real-time inventory with WebSocket updates', 'Stripe payment gateway integration', 'Admin dashboard with sales analytics'],
+    techStack: [
+      { name: 'React', icon: SiReact, color: '#61DAFB' },
+      { name: 'Redux', icon: SiRedux, color: '#764ABC' },
+      { name: 'Express', icon: SiExpress, color: '#ffffff' },
+      { name: 'Stripe', icon: SiStripe, color: '#6772e5' }
+    ]
   },
   {
     id: 'anon',
-    title: 'Anon eCommerce Website',
+    title: 'Anon Ecommerce Website',
     emoji: '🛒',
     type: 'eCommerce Website',
-    gradient: 'linear-gradient(135deg, #00d4ff22, #7c3aed22)',
-    glowColor: 'rgba(0,212,255,0.3)',
-    accentColor: '#00d4ff',
-    description:
-      'A privacy-first eCommerce platform enabling anonymous, secure shopping experiences with modern UX and robust backend infrastructure.',
-    techStack: [
-      { icon: SiReact,           name: 'React',   color: '#61DAFB' },
-      { icon: SiNodedotjs,       name: 'Node.js', color: '#8CC84B' },
-      { icon: SiMongodb,         name: 'MongoDB', color: '#00ED64' },
-      { icon: SiJsonwebtokens,   name: 'JWT',     color: '#fbba00' },
-    ],
-    features: [
-      'Anonymous user sessions with JWT-based auth',
-      'Product filtering, cart management & order history',
-      'RESTful API with Express.js backend',
-    ],
+    description: 'A privacy-first eCommerce platform enabling anonymous, secure shopping experiences with modern UX and robust backend infrastructure.',
+    image: '/images/ecomarce.png',
     icon: FiShoppingCart,
+    accentColor: '#00d4ff',
+    glowColor: 'rgba(0, 212, 255, 0.2)',
+    gradient: 'linear-gradient(135deg, rgba(0, 212, 255, 0.08), transparent)',
     githubLink: 'https://github.com/arinsarker07-oss/ecommerce-website',
     liveLink: 'https://arinsarker07-oss.github.io/ecommerce-website/#',
+    features: ['Anonymous user sessions with JWT-based auth', 'Product filtering, cart management & order history', 'RESTful API with Express.js backend'],
+    techStack: [
+      { name: 'React', icon: SiReact, color: '#61DAFB' },
+      { name: 'Node.js', icon: SiNodedotjs, color: '#8CC84B' },
+      { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
+      { name: 'JWT', icon: SiJsonwebtokens, color: '#fbba00' }
+    ]
   },
   {
     id: 'friend-zone',
     title: 'Friend Zone',
     emoji: '🌐',
     type: 'Social Networking Platform',
-    gradient: 'linear-gradient(135deg, #ec489922, #00d4ff22)',
-    glowColor: 'rgba(236,72,153,0.3)',
-    accentColor: '#ec4899',
-    description:
-      'A full-featured social networking platform with real-time chat, post feed, friend requests, and interactive user profiles.',
-    techStack: [
-      { icon: SiReact,       name: 'React',     color: '#61DAFB' },
-      { icon: SiNodedotjs,   name: 'Node.js',   color: '#8CC84B' },
-      { icon: SiMongodb,     name: 'MongoDB',   color: '#00ED64' },
-      { icon: SiSocketdotio, name: 'Socket.io', color: '#ffffff' },
-    ],
-    features: [
-      'Real-time chat with Socket.io',
-      'Dynamic post feed with likes & comments',
-      'Friend request & notification system',
-    ],
+    description: 'A full-featured social networking platform with real-time chat, post feed, friend requests, and interactive user profiles.',
+    image: '/images/friendzone.png',
     icon: FiUsers,
+    accentColor: '#ec4899',
+    glowColor: 'rgba(236, 72, 153, 0.2)',
+    gradient: 'linear-gradient(135deg, rgba(236, 72, 153, 0.08), transparent)',
     githubLink: 'https://github.com/arinsarker07-oss/Friend-Zone',
     liveLink: 'https://friends-zone-theta.vercel.app/',
-  },
+    features: ['Real-time chat with Socket.io', 'Dynamic post feed with likes & comments', 'Friend request & notification system'],
+    techStack: [
+      { name: 'React', icon: SiReact, color: '#61DAFB' },
+      { name: 'Node.js', icon: SiNodedotjs, color: '#8CC84B' },
+      { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
+      { name: 'Socket.io', icon: SiSocketdotio, color: '#ffffff' }
+    ]
+  }
 ]
 
+/* ─── Animation Variants ────────────────────────────────── */
 const cardVariants = {
-  hidden:  { opacity: 0, y: 60 },
-  visible: (i) => ({
+  hidden: { opacity: 0, y: 30 },
+  visible: i => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: 'easeOut', delay: i * 0.15 },
-  }),
-}
-
-export default function Projects() {
-  return (
-    <section id="projects" className="section-pad" style={{ position: 'relative', overflow: 'hidden' }}>
-
-      {/* Ambient glow */}
-      <div style={{
-        position: 'absolute', right: '-10%', top: '20%',
-        width: 500, height: 500,
-        background: 'radial-gradient(circle, rgba(236,72,153,0.05), transparent 70%)',
-        borderRadius: '50%', pointerEvents: 'none',
-      }} />
-      <div style={{
-        position: 'absolute', left: '-10%', bottom: '20%',
-        width: 400, height: 400,
-        background: 'radial-gradient(circle, rgba(0,212,255,0.05), transparent 70%)',
-        borderRadius: '50%', pointerEvents: 'none',
-      }} />
-
-      <div className="container-lg" style={{ position: 'relative', zIndex: 2 }}>
-
-        {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          style={{ textAlign: 'center', marginBottom: '64px' }}
-        >
-          <span className="section-tag">🗂 Portfolio</span>
-          <h2 style={{
-            fontFamily: 'var(--font-head)',
-            fontWeight: 800,
-            fontSize: 'clamp(2rem, 4vw, 3rem)',
-            letterSpacing: '-1px',
-            marginBottom: '12px',
-          }}>
-            Featured <span className="gradient-text">Projects</span>
-          </h2>
-          <p style={{ color: 'var(--text-muted)', maxWidth: '480px', margin: '0 auto' }}>
-            A selection of full-stack applications I've built — each solving real problems with clean, scalable code.
-          </p>
-        </motion.div>
-
-        {/* Cards grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-          gap: '28px',
-        }}>
-          {projects.map((project, i) => (
-            <ProjectCard key={project.id} project={project} index={i} />
-          ))}
-        </div>
-      </div>
-    </section>
-  )
+    transition: {
+      delay: i * 0.12,
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  })
 }
 
 function ProjectCard({ project, index }) {
-  const { Icon } = project
+  const Icon = project.icon
+
   return (
     <motion.div
       custom={index}
       variants={cardVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true }}
-      whileHover={{ y: -10, transition: { duration: 0.3 } }}
-      className="card-gradient-border"
+      viewport={{ once: true, margin: "-40px" }}
+      whileHover={{ y: -6 }}
       style={{
         position: 'relative',
-        padding: '32px',
+        padding: '22px', // প্যাডিং কমিয়ে ২৪px থেকে ২২px করা হলো যাতে হাইট কমে
         borderRadius: '20px',
-        background: 'rgba(255,255,255,0.04)',
+        background: 'rgba(255, 255, 255, 0.03)',
         backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255,255,255,0.08)',
-        cursor: 'default',
+        border: '1px solid rgba(255, 255, 255, 0.06)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '14px', // উপাদানগুলোর ভেতরের স্পেসিং কমানো হলো
+        height: '100%',
+        transition: 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
         overflow: 'hidden',
-        transition: 'box-shadow 0.3s ease',
+        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
       }}
       onMouseEnter={e => {
-        e.currentTarget.style.boxShadow = `0 20px 60px ${project.glowColor}`
+        e.currentTarget.style.boxShadow = `0 15px 40px ${project.glowColor}`
+        e.currentTarget.style.borderColor = `rgba(255, 255, 255, 0.12)`
       }}
       onMouseLeave={e => {
-        e.currentTarget.style.boxShadow = 'none'
+        e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.2)'
+        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)'
       }}
     >
-      {/* Background gradient */}
+      {/* Background Gradient */}
       <div style={{
         position: 'absolute', inset: 0,
         background: project.gradient,
-        opacity: 0.5,
+        opacity: 0.4,
         pointerEvents: 'none',
+        zIndex: 0
       }} />
 
-      {/* Corner glow */}
-      <div style={{
-        position: 'absolute', top: -20, right: -20,
-        width: 120, height: 120,
-        background: `radial-gradient(circle, ${project.accentColor}22, transparent 70%)`,
-        borderRadius: '50%',
-        pointerEvents: 'none',
-      }} />
+      <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '14px', height: '100%' }}>
 
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '20px' }}>
-          <div>
+        {/* Project Image - Height কমানো হলো */}
+        <div style={{
+          width: '100%',
+          height: '145px', // ১৮০px থেকে কমিয়ে ১৪৫px করা হলো যাতে কার্ড লম্বা না দেখায়
+          borderRadius: '12px',
+          overflow: 'hidden',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          background: 'rgba(0, 0, 0, 0.2)'
+        }}>
+          <img
+            src={project.image}
+            alt={project.title}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'top',
+              transition: 'transform 0.5s ease'
+            }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.04)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+          />
+        </div>
+
+        {/* Info */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{
-              width: 48, height: 48, borderRadius: '12px',
-              background: `${project.accentColor}18`,
-              border: `1px solid ${project.accentColor}33`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              marginBottom: '14px',
-              fontSize: '1.4rem',
-            }}>
-              {project.emoji}
-            </div>
-            <h3 style={{
-              fontFamily: 'var(--font-head)',
-              fontWeight: 700,
-              fontSize: '1.4rem',
-              marginBottom: '4px',
-              color: 'var(--text-primary)',
-            }}>{project.title}</h3>
-            <span style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.72rem',
+              width: '32px',
+              height: '32px',
+              borderRadius: '8px',
+              background: `${project.accentColor}15`,
+              border: `1px solid ${project.accentColor}25`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               color: project.accentColor,
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
-              opacity: 0.8,
-            }}>{project.type}</span>
-          </div>
-          <div style={{ display: 'flex', gap: '8px' }}>
-            <motion.a
-              href={project.githubLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, color: project.accentColor }}
-              style={{ color: 'var(--text-muted)', padding: '6px' }}
-            >
-              <FiGithub size={18} />
-            </motion.a>
-            <motion.a
-              href={project.liveLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, color: project.accentColor }}
-              style={{ color: 'var(--text-muted)', padding: '6px' }}
-            >
-              <FiExternalLink size={18} />
-            </motion.a>
-          </div>
-        </div>
-
-        {/* Description */}
-        <p style={{
-          color: 'var(--text-muted)',
-          fontSize: '0.9rem',
-          lineHeight: 1.75,
-          marginBottom: '20px',
-        }}>{project.description}</p>
-
-        {/* Key Features */}
-        <div style={{ marginBottom: '24px' }}>
-          <span style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.7rem',
-            color: project.accentColor,
-            letterSpacing: '1.5px',
-            textTransform: 'uppercase',
-            display: 'block',
-            marginBottom: '10px',
-          }}>Key Features</span>
-          <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '7px' }}>
-            {project.features.map((f, i) => (
-              <li key={i} style={{
-                display: 'flex', alignItems: 'flex-start', gap: '8px',
-                fontSize: '0.85rem',
-                color: 'rgba(240,240,255,0.7)',
-              }}>
-                <span style={{ color: project.accentColor, marginTop: '2px', flexShrink: 0 }}>▸</span>
-                {f}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Tech Stack Badges */}
-        <div>
-          <span style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.7rem',
-            color: project.accentColor,
-            letterSpacing: '1.5px',
-            textTransform: 'uppercase',
-            display: 'block',
-            marginBottom: '10px',
-          }}>Tech Stack Used</span>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            {project.techStack.map(({ icon: TechIcon, name, color }) => (
-              <span key={name} style={{
-                display: 'inline-flex', alignItems: 'center', gap: '5px',
-                padding: '5px 12px',
-                background: `${color}14`,
-                border: `1px solid ${color}33`,
-                borderRadius: '50px',
-                fontSize: '0.75rem',
+            }}>
+              <Icon size={16} />
+            </div>
+            <div>
+              <h3 style={{
                 fontFamily: 'var(--font-head)',
-                fontWeight: 600,
-                color: color,
+                fontSize: '1.2rem',
+                fontWeight: 700,
+                color: '#ffffff',
+                letterSpacing: '-0.3px',
+                lineHeight: '1.2'
+              }}>{project.title}</h3>
+              <span style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.62rem',
+                color: project.accentColor,
+                textTransform: 'uppercase',
+                letterSpacing: '1px'
+              }}>{project.type}</span>
+            </div>
+          </div>
+
+          <p style={{
+            fontSize: '0.82rem',
+            lineHeight: '1.5',
+            color: 'rgba(255, 255, 255, 0.5)',
+          }}>{project.description}</p>
+        </div>
+
+        {/* Features List */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <span style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.6rem',
+            color: 'rgba(255, 255, 255, 0.35)',
+            textTransform: 'uppercase',
+            letterSpacing: '1px'
+          }}>Key Features</span>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
+            {project.features.map((feature, i) => (
+              <span key={i} style={{
+                fontSize: '0.7rem',
+                padding: '3px 8px',
+                background: 'rgba(255, 255, 255, 0.04)',
+                borderRadius: '5px',
+                color: 'rgba(255, 255, 255, 0.75)',
+                border: '1px solid rgba(255, 255, 255, 0.04)'
               }}>
-                <TechIcon size={11} />
-                {name}
+                {feature}
               </span>
             ))}
           </div>
         </div>
+
+        {/* Tech Stack */}
+        <div style={{ paddingTop: '2px', marginBottom: '10px' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+            {project.techStack.map(({ name, icon: TechIcon, color }) => (
+              <div key={name} style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '4px 10px',
+                background: `${color}08`,
+                border: `1px solid ${color}20`,
+                borderRadius: '50px',
+                fontSize: '0.7rem',
+                fontWeight: 600,
+                color: color,
+                fontFamily: 'var(--font-head)'
+              }}>
+                <TechIcon size={10} />
+                {name}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div style={{
+          marginTop: 'auto',
+          paddingTop: '14px',
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '10px',
+          borderTop: '1px solid rgba(255,255,255,0.04)'
+        }}>
+          <motion.a
+            href={project.liveLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{
+              boxShadow: `0 0 15px ${project.glowColor}`,
+              y: -1
+            }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              padding: '10px 0',
+              background: project.accentColor,
+              color: '#050510',
+              borderRadius: '10px',
+              fontFamily: 'var(--font-head)',
+              fontWeight: 700,
+              fontSize: '0.82rem',
+              textDecoration: 'none',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            <FiExternalLink size={14} />
+            Live Demo
+          </motion.a>
+
+          <motion.a
+            href={project.githubLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              y: -1
+            }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              padding: '10px 0',
+              background: 'transparent',
+              color: '#ffffff',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              borderRadius: '10px',
+              fontFamily: 'var(--font-head)',
+              fontWeight: 600,
+              fontSize: '0.82rem',
+              textDecoration: 'none',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            <FiGithub size={14} />
+            Source Code
+          </motion.a>
+        </div>
       </div>
     </motion.div>
+  )
+}
+
+export default function Projects() {
+  return (
+    <section id="projects" style={{ padding: '100px 0', position: 'relative' }}>
+      <div style={{
+        position: 'absolute', top: '20%', left: '-10%', width: '40%', height: '60%',
+        background: 'radial-gradient(circle, rgba(0, 212, 255, 0.02), transparent 70%)',
+        pointerEvents: 'none'
+      }} />
+
+      {/* container-lg এর সাথে maxWidth বাড়িয়ে চওড়া করা হলো */}
+      <div className="container-lg" style={{ position: 'relative', zIndex: 1, maxWidth: '1200px', margin: '0 auto' }}>
+
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          style={{ textAlign: 'center', marginBottom: '60px' }}
+        >
+          <span className="section-tag" style={{
+            display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '5px 14px',
+            background: 'rgba(0, 212, 255, 0.06)', border: '1px solid rgba(0, 212, 255, 0.15)',
+            borderRadius: '50px', fontFamily: 'var(--font-mono)', fontSize: '0.7rem',
+            color: '#00d4ff', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '16px'
+          }}>
+            <FiCode size={12} />
+            My Creations
+          </span>
+          <h2 style={{
+            fontFamily: 'var(--font-head)', fontWeight: 800,
+            fontSize: 'clamp(2.2rem, 4vw, 3rem)', color: '#ffffff',
+            letterSpacing: '-1px', marginBottom: '12px'
+          }}>
+            Featured <span className="gradient-text">Projects</span>
+          </h2>
+          <p style={{
+            maxWidth: '550px', margin: '0 auto', fontSize: '1rem',
+            color: 'rgba(255, 255, 255, 0.45)', lineHeight: '1.5'
+          }}>
+            A selection of full-stack applications I've built — each solving real problems with clean, scalable code.
+          </p>
+        </motion.div>
+
+        {/* Grid - minmax বাড়িয়ে উইডথ বাড়ানো হলো */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+          gap: '24px',
+          alignItems: 'stretch'
+        }}>
+          {projects.map((project, index) => (
+            <ProjectCard key={project.title} project={project} index={index} />
+          ))}
+        </div>
+      </div>
+
+      {/* Mobile Styles */}
+      <style>{`
+        @media (max-width: 768px) {
+          #projects { padding: 60px 0 !important; }
+          #projects div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </section>
   )
 }
